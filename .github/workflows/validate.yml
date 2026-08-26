@@ -1,0 +1,10 @@
+name: Validate ER resources
+on: [push, pull_request]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: python -m py_compile tools/extract_dia_labels.py
+      - run: test -s docs/distribuidora.md && test -s docs/ejercicio13.md && test -s docs/ejercicio14.md
+      - run: grep -q 'erDiagram' docs/distribuidora.md && grep -q 'erDiagram' docs/ejercicio13.md && grep -q 'erDiagram' docs/ejercicio14.md
